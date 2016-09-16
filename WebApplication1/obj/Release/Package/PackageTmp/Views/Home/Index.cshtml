@@ -1,0 +1,140 @@
+﻿
+   <p class="lead"> <h1>SCPL Amanda View</h1></p>
+  
+
+<div class="well well1">
+
+    <div class="row">
+        <div class="col-sm-3 form-group">
+            <input class="form-control cl" id="Start_Date" name="AVItem" placeholder="Start Date" type="text" />
+        </div>
+        <div class="col-sm-3 form-group">
+            <input class="form-control cl" id="End_Date" name="AVItem" placeholder="End Date" type="text" />
+        </div>
+        <div class="col-sm-3 form-group">
+            <a id="search" class="btn btn-success ">Search</a>
+        </div>
+        <div class="col-sm-3 form-group">
+            <a id="WordDoc" class="btn btn-primary ">Microsoft Word</a>
+        </div>
+        
+    </div>
+</div>
+        
+
+    <div id="resulttext"></div>
+
+
+
+
+    <div class="row">
+
+    </div>
+    <Style>
+        .well {
+            background-color: #0fb9d7;
+            /*border-bottom	: 2px groove black;
+            height: 100px;*/
+        }
+
+        .well1 {
+            background-color: #ff9900;
+            /*border-bottom	: 2px groove black;
+            height: 100px;*/
+        }
+    </Style>
+
+
+    @*<input type="button" onclick="f2()" value="Get Message" />*@
+
+    <script type='text/javascript'>
+        function f2() {
+            $.ajax({
+                url: '@Url.Action("test", "Home")',
+
+                type: 'POST',
+                success: function (data) {
+                    // alert(data);
+                    $('#resulttext').html(data);
+                }
+            });
+        }
+
+
+
+    </script>
+
+    @section Scripts {
+
+        <script src="~/NewScript/bootstrap-datepicker.js"></script>
+        <link href="~/NewScript/datepicker.css" rel="stylesheet" />
+        <script type="text/JavaScript">
+            $(document).ready(function () {
+                // f2();
+
+                $('#search').click(function () {
+                    $.ajax({
+                        url: '@Url.Action("search", "Home")',
+                        data: { startadte: $('#Start_Date').val(), Endadte: $('#End_Date').val() },
+                        type: 'POST',
+                        success: function (data) {
+                            $('#resulttext').html(data);
+                            // window.location = '/Home/Download?file=' + "D1.docx";
+                        }
+                    });
+                });
+                $('#WordDoc').click(function () {
+                    $.ajax({
+                        url: '@Url.Action("WordDoc", "Home")',
+                        data: { startadte: $('#Start_Date').val(), Endadte: $('#End_Date').val() },
+                        type: 'POST',
+                        success: function (data) {
+                            $('#resulttext').html(data);
+                           // jQuery(document).ready(function ($) {
+                               // $("#WordDoc").click(function (event) {
+                                    $("#page-content").wordExport();
+                               // });
+                           // });
+                        }
+                    });
+                });
+
+
+
+
+            });
+
+            // When the document is ready window.location = '/Home/Download?file=' + "e.docx";
+            $(document).ready(function () {
+
+                $('.cl').datepicker({
+                    format: "yyyy-mm-dd"
+                });
+
+                $(".cl").keydown(false);
+
+            });
+
+
+            /////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+            ////////////////////////// </script>
+
+        <script src="~/NewScript/FileSaver.js"></script>
+
+        <script src="~/NewScript/jquery.wordexport.js"></script>
+        <script type="text/javascript">
+            
+        </script>
+        }
